@@ -1,82 +1,92 @@
 # 🛡 Modular SOC Platform
 
-This is my final degree project, a modular and scalable Security Operations Center (SOC) deployment framework designed for small and medium-sized enterprises (SMEs).
+![SOC](https://img.shields.io/badge/SOC-Modular-blue)
+![Security](https://img.shields.io/badge/Cybersecurity-Platform-red)
+![Automation](https://img.shields.io/badge/Automation-Enabled-green)
+![AI](https://img.shields.io/badge/AI-Integrated-purple)
+![License](https://img.shields.io/badge/License-MIT-yellow)
 
-    This project provides:
+A modular and scalable **Security Operations Center (SOC)** deployment framework designed for Small and Medium Enterprises (SMEs).
 
-        Automated SOC deployment
+This project provides:
 
-        IDS/IPS configuration
+- Automated SOC deployment
+- IDS/IPS configuration
+- Endpoint monitoring
+- Log centralization (SIEM)
+- AI-driven alert analysis
+- Automated response scripts
+- Compliance-oriented dashboards
 
-        Endpoint monitoring
+---
 
-        Log centralization
+# 📌 Architecture Overview
 
-        Compliance-oriented dashboards
+The platform integrates:
 
-        AI-driven threat analysis and alert summarization
+- **Security Onion** – SOC base platform
+- **Suricata (IDS/IPS)** – Network intrusion detection & prevention
+- **Zeek** – Network traffic behavioral analysis
+- **Wazuh (HIDS)** – Endpoint detection and response
+- **Elastic Stack (ELK)** – Log aggregation and visualization
+- **Python AI Modules** – Alert classification & anomaly detection
+- **ShellGPT integration** – Natural language SOC assistant
 
-        Automated response capabilities
+---
 
-🔧 Technologies Used
+# 🚀 Quick Deployment
 
-    Security Onion
+## 1️⃣ Clone the repository
 
-    Suricata (IDS/IPS)
+```bash
+git clone https://github.com/yourusername/Modular-SOC-Platform.git
+cd Modular-SOC-Platform
+```
 
-    Zeek (Network Analysis)
+## 2️⃣ Run installation script
 
-    Wazuh (Endpoint Detection & Response)
+```bash
+chmod +x scripts/install_soc.sh
+sudo ./scripts/install_soc.sh
+```
 
-    Elastic Stack (SIEM)
+---
 
-    Docker
+# 🖥 System Requirements
 
-    Bash Automation
+- Ubuntu Server 22.04 LTS
+- 8 vCPU minimum
+- 16GB RAM recommended
+- 250GB storage
+- SPAN / Mirror port recommended for NIDS
 
-    Python
+---
 
-    OpenAI / ShellGPT integration
+# 🔐 SOC Installation Script
 
-🚀 Deployment Guide
-    
-       1️⃣ System Requirements
-
-            Ubuntu Server 22.04 LTS
-
-            8+ vCPU
-
-            16GB+ RAM
-
-            250GB+ Storage
-
-            Network TAP / SPAN Port recommended
-
-    
-       2️⃣ Quick Installation
-            git clone https://github.com/PCarba/SOC/Modular-SOC-Platform.git
-            cd Modular-SOC-Platform
-            chmod +x scripts/install_soc.sh
-            sudo ./scripts/install_soc.sh
-🔐 install_soc.sh (REAL SCRIPT)
+```bash
 #!/bin/bash
 
 echo "[+] Updating system..."
 apt update && apt upgrade -y
 
-echo "[+] Installing dependencies..."
+echo "[+] Installing base dependencies..."
 apt install -y curl wget git docker.io python3 python3-pip
 
 echo "[+] Installing Security Onion..."
 curl -L https://securityonion.net/install.sh | bash
 
-echo "[+] Deploying Docker services..."
+echo "[+] Starting infrastructure..."
 docker-compose -f infrastructure/docker-compose.yml up -d
 
-echo "[+] Installation completed."
+echo "[✓] SOC Installation Complete."
+```
 
+---
 
-📁 ai/llm_alert_summary.py
+# 🤖 AI Alert Summarization Module
+
+```python
 import openai
 import json
 
@@ -86,13 +96,18 @@ def summarize_alert(alert_json):
     response = openai.ChatCompletion.create(
         model="gpt-4",
         messages=[
-            {"role": "system", "content": "You are a SOC analyst assistant."},
-            {"role": "user", "content": f"Summarize this security alert:\n{alert_json}"}
+            {"role": "system", "content": "You are a senior SOC analyst."},
+            {"role": "user", "content": f"Summarize this alert and suggest next steps:\n{alert_json}"}
         ]
     )
     return response.choices[0].message.content
-🧠 AI-Driven Anomaly Detection
-ai/anomaly_detection.py
+```
+
+---
+
+# 🧠 Anomaly Detection (Machine Learning)
+
+```python
 import pandas as pd
 from sklearn.ensemble import IsolationForest
 
@@ -101,16 +116,13 @@ def detect_anomalies(log_file):
     model = IsolationForest(contamination=0.01)
     df['anomaly'] = model.fit_predict(df[['bytes_sent','bytes_received']])
     return df[df['anomaly'] == -1]
-🧠 ShellGPT Integration (SOC Chat Interface)
-ai/shellgpt_integration.sh
-#!/bin/bash
+```
 
-echo "Describe the incident:"
-read incident
+---
 
-sgpt "As a SOC analyst, analyze this incident and provide next steps: $incident"
-🔥 Automated Response Script
-scripts/auto_response.sh
+# 🔥 Automated IP Blocking
+
+```bash
 #!/bin/bash
 
 IP=$1
@@ -118,9 +130,33 @@ IP=$1
 echo "[+] Blocking malicious IP: $IP"
 iptables -A INPUT -s $IP -j DROP
 
-echo "[+] IP blocked successfully."
-📊 SOC Health Check
-scripts/health_check.sh
+echo "[✓] IP successfully blocked."
+```
+
+Usage:
+
+```bash
+sudo ./scripts/auto_response.sh 192.168.1.100
+```
+
+---
+
+# 🧠 ShellGPT SOC Assistant
+
+```bash
+#!/bin/bash
+
+echo "Describe the incident:"
+read incident
+
+sgpt "As a SOC analyst, analyze this security incident and provide response steps: $incident"
+```
+
+---
+
+# 📊 Health Check Script
+
+```bash
 #!/bin/bash
 
 echo "Checking Suricata..."
@@ -131,10 +167,41 @@ systemctl status wazuh-manager | grep Active
 
 echo "Checking Elasticsearch..."
 systemctl status elasticsearch | grep Active
-📈 Why This Project Is Attractive for Recruiters
+```
 
-Shows SOC architecture knowledge
+---
 
-Demonstrates automation capability
+# 📈 Compliance Alignment
 
-Integrates AI in cybersecurity
+The project aligns with:
+
+- GDPR (General Data Protection Regulation)
+- ENS (Spanish National Security Framework)
+- ISO/IEC 27001
+- MITRE ATT&CK framework
+
+---
+
+# 🔥 Future Improvements
+
+- SOAR integration
+- Threat Intelligence feeds
+- Automated playbooks
+- Cloud-native deployment (AWS/Azure)
+- Kubernetes orchestration
+- CI/CD security pipeline
+
+---
+
+# 👨‍💻 Author
+
+**Pablo Carballeira Baamonde**  
+Cybersecurity & Systems Administration  
+ASIR Graduate  
+
+---
+
+# ⚠ Disclaimer
+
+This project is intended for educational and research purposes.  
+Always deploy responsibly and in controlled environments.
