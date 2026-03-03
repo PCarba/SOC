@@ -39,23 +39,23 @@ This is my final degree project, a modular and scalable Security Operations Cent
     OpenAI / ShellGPT integration
 
 🚀 Deployment Guide
-1️⃣ System Requirements
+    1️⃣ System Requirements
 
-Ubuntu Server 22.04 LTS
+        Ubuntu Server 22.04 LTS
 
-8+ vCPU
+        8+ vCPU
 
-16GB+ RAM
+        16GB+ RAM
 
-250GB+ Storage
+        250GB+ Storage
 
-Network TAP / SPAN Port recommended
+        Network TAP / SPAN Port recommended
 
-2️⃣ Quick Installation
-git clone https://github.com/yourusername/Modular-SOC-Platform.git
-cd Modular-SOC-Platform
-chmod +x scripts/install_soc.sh
-sudo ./scripts/install_soc.sh
+    2️⃣ Quick Installation
+        git clone https://github.com/yourusername/Modular-SOC-Platform.git
+        cd Modular-SOC-Platform
+        chmod +x scripts/install_soc.sh
+        sudo ./scripts/install_soc.sh
 🔐 install_soc.sh (REAL SCRIPT)
 #!/bin/bash
 
