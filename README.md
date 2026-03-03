@@ -101,4 +101,3 @@ See: [`SECURITY.md`](SECURITY.md)
 ##  Author
 **Pablo Carballeira Baamonde**  
 GitHub: `PCarba`  
-Brand: **PCarba Works**
