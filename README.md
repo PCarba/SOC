@@ -10,7 +10,7 @@
 
 ---
 
-## ✨ What’s inside
+##  What’s inside
 
 ### Core capabilities
 - **Centralized logging** (SIEM layer) with dashboards
@@ -26,7 +26,7 @@
 
 ---
 
-## 🧱 Architecture (high level)
+##  Architecture (high level)
 - **SIEM/Storage**: Elastic/OpenSearch-compatible stack via Docker Compose *(templates provided)*
 - **Endpoint layer**: Wazuh agents (Linux/Windows) *(installers + enrollment helpers)*
 - **Network layer** *(optional)*: Suricata (IDS) + Zeek (NSM) on a sensor host
@@ -36,7 +36,7 @@ See: [`docs/architecture.md`](docs/architecture.md)
 
 ---
 
-## ✅ Quick start (local / lab)
+##  Quick start (local / lab)
 > This repository provides **templates** and **automation**. You will choose the final stack (Elastic/OpenSearch/Wazuh bundle) according to your environment.
 
 ### 1) Clone
@@ -62,7 +62,7 @@ docker compose -f infrastructure/docker-compose.yml up -d
 
 ---
 
-## 📦 Folder overview
+##  Folder overview
 ```text
 .
 ├── docs/                  # Technical docs (architecture, deployment, ops)
@@ -76,21 +76,21 @@ docker compose -f infrastructure/docker-compose.yml up -d
 
 ---
 
-## 🔐 Security / Ethics
+##  Security / Ethics
 This project is for **defensive security** and SOC enablement. Any testing must be performed **only** on systems you own or have explicit authorization to test.
 
 See: [`SECURITY.md`](SECURITY.md)
 
 ---
 
-## 🧪 Operational notes
+##  Operational notes
 - Review `infrastructure/docker-compose.yml` and set credentials in `infrastructure/.env`
 - Place this stack **behind a firewall**, restrict access, enable TLS
 - Maintain updates and backups (see `scripts/backup.sh`)
 
 ---
 
-## 🗺️ Roadmap
+##  Roadmap
 - MITRE ATT&CK mapping for detections
 - SOAR-style playbooks (opt-in)
 - Threat intel ingestion templates
@@ -98,7 +98,7 @@ See: [`SECURITY.md`](SECURITY.md)
 
 ---
 
-## 👤 Author
+##  Author
 **Pablo Carballeira Baamonde**  
 GitHub: `PCarba`  
 Brand: **PCarba Works**
