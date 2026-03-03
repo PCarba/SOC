@@ -54,7 +54,7 @@ This is my final degree project, a modular and scalable Security Operations Cent
 
     
        2️⃣ Quick Installation
-            git clone https://github.com/yourusername/Modular-SOC-Platform.git
+            git clone https://github.com/PCarba/SOC/Modular-SOC-Platform.git
             cd Modular-SOC-Platform
             chmod +x scripts/install_soc.sh
             sudo ./scripts/install_soc.sh
