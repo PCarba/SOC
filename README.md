@@ -39,7 +39,7 @@ The platform integrates:
 ## 1️⃣ Clone the repository
 
 ```bash
-git clone https://github.com/PCarba/SOC/Modular-SOC-Platform.git
+git clone https://github.com/PCarba/SOC/SOC.git
 cd Modular-SOC-Platform
 ```
 
