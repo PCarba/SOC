@@ -2,41 +2,41 @@
 
 This is my final degree project, a modular and scalable Security Operations Center (SOC) deployment framework designed for small and medium-sized enterprises (SMEs).
 
-This project provides:
+    This project provides:
 
-Automated SOC deployment
+        Automated SOC deployment
 
-IDS/IPS configuration
+        IDS/IPS configuration
 
-Endpoint monitoring
+        Endpoint monitoring
 
-Log centralization
+        Log centralization
 
-Compliance-oriented dashboards
+        Compliance-oriented dashboards
 
-AI-driven threat analysis and alert summarization
+        AI-driven threat analysis and alert summarization
 
-Automated response capabilities
+        Automated response capabilities
 
 🔧 Technologies Used
 
-Security Onion
+    Security Onion
 
-Suricata (IDS/IPS)
+    Suricata (IDS/IPS)
 
-Zeek (Network Analysis)
+    Zeek (Network Analysis)
 
-Wazuh (Endpoint Detection & Response)
+    Wazuh (Endpoint Detection & Response)
 
-Elastic Stack (SIEM)
+    Elastic Stack (SIEM)
 
-Docker
+    Docker
 
-Bash Automation
+    Bash Automation
 
-Python
+    Python
 
-OpenAI / ShellGPT integration
+    OpenAI / ShellGPT integration
 
 🚀 Deployment Guide
 1️⃣ System Requirements
