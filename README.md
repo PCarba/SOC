@@ -182,22 +182,12 @@ The project aligns with:
 
 ---
 
-# 🔥 Future Improvements
-
-- SOAR integration
-- Threat Intelligence feeds
-- Automated playbooks
-- Cloud-native deployment (AWS/Azure)
-- Kubernetes orchestration
-- CI/CD security pipeline
-
----
 
 # 👨‍💻 Author
 
 **Pablo Carballeira Baamonde**  
-Cybersecurity & Systems Administration  
-ASIR Graduate  
+Graduate in Networked Computer Systems Administration
+ 
 
 ---
 
