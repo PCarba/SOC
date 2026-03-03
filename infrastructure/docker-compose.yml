@@ -1,0 +1,22 @@
+services:
+  soc-kibana:
+    image: docker.elastic.co/kibana/kibana:8.13.4
+    environment:
+      - ELASTICSEARCH_HOSTS=http://soc-elasticsearch:9200
+    ports:
+      - "${SIEM_HTTP_PORT:-5601}:5601"
+    depends_on:
+      - soc-elasticsearch
+
+  soc-elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.13.4
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+    ports:
+      - "9200:9200"
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
+
+volumes:
+  esdata:

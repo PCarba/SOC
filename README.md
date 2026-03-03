@@ -1,197 +1,104 @@
-# 🛡 Modular SOC Platform
+# 🛡️ Modular SOC Platform
+**Deployable SOC building blocks** for SMEs: log collection, detection, dashboards, automation, and optional AI-assisted triage.
+
+> **Goal**: Provide a clean, reproducible reference implementation and tooling to deploy a SOC stack in a customer environment (on-prem or lab) using open-source components.
 
 ![SOC](https://img.shields.io/badge/SOC-Modular-blue)
-![Security](https://img.shields.io/badge/Cybersecurity-Platform-red)
-![Automation](https://img.shields.io/badge/Automation-Enabled-green)
-![AI](https://img.shields.io/badge/AI-Integrated-purple)
+![Automation](https://img.shields.io/badge/Automation-Scripts-green)
+![Infra](https://img.shields.io/badge/Infrastructure-Docker%20Compose-orange)
 ![License](https://img.shields.io/badge/License-MIT-yellow)
 
-A modular and scalable **Security Operations Center (SOC)** deployment framework designed for Small and Medium Enterprises (SMEs).
+---
 
-This project provides:
+## ✨ What’s inside
 
-- Automated SOC deployment
-- IDS/IPS configuration
-- Endpoint monitoring
-- Log centralization (SIEM)
-- AI-driven alert analysis
-- Automated response scripts
-- Compliance-oriented dashboards
+### Core capabilities
+- **Centralized logging** (SIEM layer) with dashboards
+- **Endpoint telemetry** (Linux/Windows) via agents
+- **Network detection** (Suricata/Zeek) optional
+- **Health checks, backups, and baseline hardening**
+- **Automation hooks** for response actions (safe, opt-in)
+
+### AI-assisted (optional)
+- Alert summarization / ticket drafting
+- Triage suggestions (next steps)
+- Natural-language helper using ShellGPT *(optional integration)*
 
 ---
 
-# 📌 Architecture Overview
+## 🧱 Architecture (high level)
+- **SIEM/Storage**: Elastic/OpenSearch-compatible stack via Docker Compose *(templates provided)*
+- **Endpoint layer**: Wazuh agents (Linux/Windows) *(installers + enrollment helpers)*
+- **Network layer** *(optional)*: Suricata (IDS) + Zeek (NSM) on a sensor host
+- **Automation**: shell scripts + Python helpers
 
-The platform integrates:
-
-- **Security Onion** – SOC base platform
-- **Suricata (IDS/IPS)** – Network intrusion detection & prevention
-- **Zeek** – Network traffic behavioral analysis
-- **Wazuh (HIDS)** – Endpoint detection and response
-- **Elastic Stack (ELK)** – Log aggregation and visualization
-- **Python AI Modules** – Alert classification & anomaly detection
-- **ShellGPT integration** – Natural language SOC assistant
+See: [`docs/architecture.md`](docs/architecture.md)
 
 ---
 
-# 🚀 Quick Deployment
+## ✅ Quick start (local / lab)
+> This repository provides **templates** and **automation**. You will choose the final stack (Elastic/OpenSearch/Wazuh bundle) according to your environment.
 
-## 1️⃣ Clone the repository
-
+### 1) Clone
 ```bash
-git clone https://github.com/PCarba/SOC.git
+git clone https://github.com/PCarba/Modular-SOC-Platform.git
 cd Modular-SOC-Platform
 ```
 
-## 2️⃣ Run installation script
-
+### 2) Bring up the SIEM stack (template)
 ```bash
-chmod +x scripts/install_soc.sh
-sudo ./scripts/install_soc.sh
+cp infrastructure/.env.example infrastructure/.env
+docker compose -f infrastructure/docker-compose.yml up -d
 ```
 
----
-
-# 🖥 System Requirements
-
-- Ubuntu Server 22.04 LTS
-- 8 vCPU minimum
-- 16GB RAM recommended
-- 250GB storage
-- SPAN / Mirror port recommended for NIDS
-
----
-
-# 🔐 SOC Installation Script
-
+### 3) Check services
 ```bash
-#!/bin/bash
+./scripts/health_check.sh
+```
 
-echo "[+] Updating system..."
-apt update && apt upgrade -y
+### 4) Enroll endpoints (agents)
+- Linux: `scripts/deploy_wazuh_agent_linux.sh`
+- Windows: `scripts/deploy_wazuh_agent_windows.ps1`
 
-echo "[+] Installing base dependencies..."
-apt install -y curl wget git docker.io python3 python3-pip
+---
 
-echo "[+] Installing Security Onion..."
-curl -L https://securityonion.net/install.sh | bash
-
-echo "[+] Starting infrastructure..."
-docker-compose -f infrastructure/docker-compose.yml up -d
-
-echo "[✓] SOC Installation Complete."
+## 📦 Folder overview
+```text
+.
+├── docs/                  # Technical docs (architecture, deployment, ops)
+├── infrastructure/        # Docker Compose templates + environment file
+├── scripts/               # Install, hardening, backup, health checks, response hooks
+├── detection-rules/       # Suricata / Wazuh rule templates and notes
+├── dashboards/            # Exported dashboard templates (placeholders)
+├── ai/                    # Optional AI helpers (summaries, triage)
+└── lab/                   # Example log samples + simulation notes (optional)
 ```
 
 ---
 
-# 🤖 AI Alert Summarization Module
+## 🔐 Security / Ethics
+This project is for **defensive security** and SOC enablement. Any testing must be performed **only** on systems you own or have explicit authorization to test.
 
-```python
-import openai
-import json
-
-openai.api_key = "YOUR_API_KEY"
-
-def summarize_alert(alert_json):
-    response = openai.ChatCompletion.create(
-        model="gpt-4",
-        messages=[
-            {"role": "system", "content": "You are a senior SOC analyst."},
-            {"role": "user", "content": f"Summarize this alert and suggest next steps:\n{alert_json}"}
-        ]
-    )
-    return response.choices[0].message.content
-```
+See: [`SECURITY.md`](SECURITY.md)
 
 ---
 
-# 🧠 Anomaly Detection (Machine Learning)
-
-```python
-import pandas as pd
-from sklearn.ensemble import IsolationForest
-
-def detect_anomalies(log_file):
-    df = pd.read_csv(log_file)
-    model = IsolationForest(contamination=0.01)
-    df['anomaly'] = model.fit_predict(df[['bytes_sent','bytes_received']])
-    return df[df['anomaly'] == -1]
-```
+## 🧪 Operational notes
+- Review `infrastructure/docker-compose.yml` and set credentials in `infrastructure/.env`
+- Place this stack **behind a firewall**, restrict access, enable TLS
+- Maintain updates and backups (see `scripts/backup.sh`)
 
 ---
 
-# 🔥 Automated IP Blocking
-
-```bash
-#!/bin/bash
-
-IP=$1
-
-echo "[+] Blocking malicious IP: $IP"
-iptables -A INPUT -s $IP -j DROP
-
-echo "[✓] IP successfully blocked."
-```
-
-Usage:
-
-```bash
-sudo ./scripts/auto_response.sh 192.168.1.100
-```
+## 🗺️ Roadmap
+- MITRE ATT&CK mapping for detections
+- SOAR-style playbooks (opt-in)
+- Threat intel ingestion templates
+- CI checks (shellcheck, python lint)
 
 ---
 
-# 🧠 ShellGPT SOC Assistant
-
-```bash
-#!/bin/bash
-
-echo "Describe the incident:"
-read incident
-
-sgpt "As a SOC analyst, analyze this security incident and provide response steps: $incident"
-```
-
----
-
-# 📊 Health Check Script
-
-```bash
-#!/bin/bash
-
-echo "Checking Suricata..."
-systemctl status suricata | grep Active
-
-echo "Checking Wazuh..."
-systemctl status wazuh-manager | grep Active
-
-echo "Checking Elasticsearch..."
-systemctl status elasticsearch | grep Active
-```
-
----
-
-# 📈 Compliance Alignment
-
-The project aligns with:
-
-- GDPR (General Data Protection Regulation)
-- ENS (Spanish National Security Framework)
-- ISO/IEC 27001
-- MITRE ATT&CK framework
-
----
-
-
-# 👨‍💻 Author
-
+## 👤 Author
 **Pablo Carballeira Baamonde**  
-Graduate in Networked Computer Systems Administration
- 
-
----
-
-# ⚠ Disclaimer
-
-This project is intended for educational and research purposes.  
-Always deploy responsibly and in controlled environments.
+GitHub: `PCarba`  
+Brand: **PCarba Works**
